@@ -1,0 +1,43 @@
+basePath: /api/v1
+info:
+  contact: {}
+  title: Johny Tuna
+  version: "1.0"
+paths:
+  /categories/get:
+    get:
+      produces:
+      - application/json
+      responses: {}
+      summary: Получение категорий
+      tags:
+      - categories
+  /products/getByCategory:
+    get:
+      parameters:
+      - description: id категории
+        in: query
+        name: category_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Получение продуктов по категории
+      tags:
+      - products
+  /search/products:
+    get:
+      parameters:
+      - description: Имя продукта (поиск)
+        in: query
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Получение продуктов из поиска
+      tags:
+      - search
+swagger: "2.0"

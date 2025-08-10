@@ -1,0 +1,20 @@
+package service
+
+import (
+	"johny-tuna/internal/models"
+	"johny-tuna/internal/repository"
+)
+
+type Service interface {
+	GetProductsByCategory(categoryId int64) ([]models.Product, error)
+	SearchProductsByName(productName string) ([]models.Product, error)
+	GetCategories() ([]models.Category, error)
+}
+
+type service struct {
+	repo repository.Repository
+}
+
+func NewService(repo repository.Repository) Service {
+	return &service{repo: repo}
+}

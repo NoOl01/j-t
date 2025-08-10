@@ -1,0 +1,20 @@
+package repository
+
+import (
+	"gorm.io/gorm"
+	"johny-tuna/internal/models"
+)
+
+type Repository interface {
+	GetProductsByCategory(categoryId int64) ([]models.Product, error)
+	SearchProductsByName(productName string) ([]models.Product, error)
+	GetCategories() ([]models.Category, error)
+}
+
+type repository struct {
+	db *gorm.DB
+}
+
+func NewRepository(db *gorm.DB) Repository {
+	return &repository{db: db}
+}
