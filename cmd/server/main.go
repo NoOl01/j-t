@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"johny-tuna/internal/config"
 	"johny-tuna/internal/handler"
@@ -20,6 +21,7 @@ func main() {
 	h := handler.NewHandler(srv)
 
 	r := gin.Default()
+	r.Use(cors.Default())
 	h.Route(r)
 
 	err := r.Run(fmt.Sprintf(":%s", config.Env.Port))
