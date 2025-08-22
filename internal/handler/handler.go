@@ -10,6 +10,8 @@ type Handler interface {
 	GetProductsByCategory(c *gin.Context)
 	SearchProductsByName(c *gin.Context)
 	GetCategories(c *gin.Context)
+	Login(c *gin.Context)
+	Register(c *gin.Context)
 }
 
 type handler struct {

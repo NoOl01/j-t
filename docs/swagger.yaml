@@ -1,9 +1,60 @@
 basePath: /api/v1
+definitions:
+  dto.LoginBody:
+    properties:
+      login_or_email:
+        type: string
+      password:
+        type: string
+    type: object
+  dto.RegisterBody:
+    properties:
+      email:
+        type: string
+      login:
+        type: string
+      password:
+        type: string
+    type: object
 info:
   contact: {}
   title: Johny Tuna
   version: "1.0"
 paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные для входа
+        in: body
+        name: login_body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LoginBody'
+      produces:
+      - application/json
+      responses: {}
+      summary: Вход в аккаунт
+      tags:
+      - auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные для регистрации
+        in: body
+        name: register_body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.RegisterBody'
+      produces:
+      - application/json
+      responses: {}
+      summary: Регистрация
+      tags:
+      - auth
   /categories/get:
     get:
       produces:

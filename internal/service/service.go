@@ -9,6 +9,8 @@ type Service interface {
 	GetProductsByCategory(categoryId int64) ([]models.Product, error)
 	SearchProductsByName(productName string) ([]models.Product, error)
 	GetCategories() ([]models.Category, error)
+	Login(loginOrEmail, password string) (string, error)
+	Register(login, email, password string) (string, error)
 }
 
 type service struct {

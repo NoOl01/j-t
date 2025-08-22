@@ -22,6 +22,11 @@ func (h *handler) Route(r *gin.Engine) {
 		{
 			search.GET("/products", h.SearchProductsByName)
 		}
+		auth := api.Group("/auth")
+		{
+			auth.POST("/login", h.Login)
+			auth.POST("/register", h.Register)
+		}
 		api.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
 }

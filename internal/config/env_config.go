@@ -8,11 +8,12 @@ import (
 )
 
 type Config struct {
-	Port   string
-	DbUser string
-	DbPass string
-	DbName string
-	DbPort string
+	Port      string
+	DbUser    string
+	DbPass    string
+	DbName    string
+	DbPort    string
+	JwtSecret string
 }
 
 var Env *Config
@@ -44,6 +45,7 @@ func LoadEnv() {
 	Env.DbPass = os.Getenv("DB_PASS")
 	Env.DbName = os.Getenv("DB_NAME")
 	Env.DbPort = os.Getenv("DB_PORT")
+	Env.JwtSecret = os.Getenv("JWT_SECRET")
 }
 
 func checkOrCreateEnv() (bool, error) {
@@ -79,7 +81,9 @@ func createEnvTemplate() error {
 DB_USER=
 DB_PASS=
 DB_NAME=
-DB_PORT=`
+DB_PORT=
+JWT_SECRET=
+`
 
 	_, err = file.Write([]byte(envText))
 	if err != nil {
