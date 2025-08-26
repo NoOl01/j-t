@@ -1,39 +1,34 @@
 package config
 
 import (
-	"errors"
 	"fmt"
 	"github.com/joho/godotenv"
 	"os"
 )
 
 type Config struct {
-	Port      string
-	DbUser    string
-	DbPass    string
-	DbName    string
-	DbPort    string
-	JwtSecret string
+	Port         string
+	DbUser       string
+	DbPass       string
+	DbName       string
+	DbPort       string
+	JwtSecret    string
+	Mail         string
+	MailPassword string
+	SmtpHost     string
+	SmtpPort     string
+	AppDomain    string
 }
 
+var BuildExist bool
 var Env *Config
 
 func LoadEnv() {
 	Env = &Config{}
-	isCreated, err := checkOrCreateEnv()
-	if err != nil {
-		panic(err)
-	}
 
-	if isCreated {
-		fmt.Println("env config created")
-		fmt.Printf("HINT:" +
-			"PORT: Application port (for example, 8080)\n" +
-			"DB_USER: Database user (for example, 'root')\n" +
-			"DB_PASS: Database password (for example, '1234')\n" +
-			"DB_NAME: Database schema name (for example, 'johny')\n" +
-			"DB_PORT: Database port (for mysql, the default is 3306)\n")
-		os.Exit(0)
+	created := CheckEnv()
+	if !created {
+		EnvHelper()
 	}
 
 	if err := godotenv.Load(); err != nil {
@@ -46,48 +41,9 @@ func LoadEnv() {
 	Env.DbName = os.Getenv("DB_NAME")
 	Env.DbPort = os.Getenv("DB_PORT")
 	Env.JwtSecret = os.Getenv("JWT_SECRET")
-}
-
-func checkOrCreateEnv() (bool, error) {
-	fileExist, err := os.Stat(".env")
-	if err != nil {
-		if errors.Is(err, os.ErrNotExist) {
-			return true, createEnvTemplate()
-		}
-		return false, err
-	}
-
-	if fileExist.IsDir() {
-		return true, createEnvTemplate()
-	}
-	return false, nil
-}
-
-func createEnvTemplate() error {
-	file, err := os.Create(".env")
-	if err != nil {
-		return err
-	}
-
-	defer func(file *os.File) {
-		err := file.Close()
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-	}(file)
-
-	envText := `PORT=
-DB_USER=
-DB_PASS=
-DB_NAME=
-DB_PORT=
-JWT_SECRET=
-`
-
-	_, err = file.Write([]byte(envText))
-	if err != nil {
-		return err
-	}
-	return nil
+	Env.Mail = os.Getenv("MAIL")
+	Env.MailPassword = os.Getenv("MAIL_PASSWORD")
+	Env.SmtpHost = os.Getenv("SMTP_HOST")
+	Env.SmtpPort = os.Getenv("SMTP_PORT")
+	Env.AppDomain = os.Getenv("APP_DOMAIN")
 }

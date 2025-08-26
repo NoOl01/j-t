@@ -49,7 +49,7 @@ func (h *handler) Login(c *gin.Context) {
 }
 
 // Register
-// @Summary Регистрация
+// @Summary Регистрация (запрос на верификацию почты)
 // @Tags auth
 // @Accept json
 // @Produce json
@@ -60,13 +60,40 @@ func (h *handler) Register(c *gin.Context) {
 
 	if err := c.ShouldBindJSON(&body); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"result": nil,
-			"error":  errs.InvalidBody.Error(),
+			"error": errs.InvalidBody.Error(),
 		})
 		return
 	}
 
 	if body.Login == "" || body.Email == "" || body.Password == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": errs.InvalidBody.Error(),
+		})
+		return
+	}
+
+	if err := h.service.Register(body.Login, body.Email, body.Password); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"error": nil,
+	})
+}
+
+// VerifyRegister
+// @Summary Регистрация (верификация почты по OTP коду)
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param token query string true "Данные для регистрации + код"
+// @Router /auth/verify [get]
+func (h *handler) VerifyRegister(c *gin.Context) {
+	token := c.Query("token")
+	if token == "" {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"result": nil,
 			"error":  errs.InvalidBody.Error(),
@@ -74,7 +101,7 @@ func (h *handler) Register(c *gin.Context) {
 		return
 	}
 
-	token, err := h.service.Register(body.Login, body.Email, body.Password)
+	jwtToken, err := h.service.VerificationRegister(token)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"result": nil,
@@ -84,7 +111,7 @@ func (h *handler) Register(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"result": token,
+		"result": jwtToken,
 		"error":  nil,
 	})
 }

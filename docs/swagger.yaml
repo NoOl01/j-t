@@ -52,7 +52,23 @@ paths:
       produces:
       - application/json
       responses: {}
-      summary: Регистрация
+      summary: Регистрация (запрос на верификацию почты)
+      tags:
+      - auth
+  /auth/verify:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные для регистрации + код
+        in: query
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Регистрация (верификация почты по OTP коду)
       tags:
       - auth
   /categories/get:

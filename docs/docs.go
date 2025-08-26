@@ -52,7 +52,7 @@ const docTemplate = `{
                 "tags": [
                     "auth"
                 ],
-                "summary": "Регистрация",
+                "summary": "Регистрация (запрос на верификацию почты)",
                 "parameters": [
                     {
                         "description": "Данные для регистрации",
@@ -62,6 +62,30 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/dto.RegisterBody"
                         }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/auth/verify": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Регистрация (верификация почты по OTP коду)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Данные для регистрации + код",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {}

@@ -12,6 +12,7 @@ type Handler interface {
 	GetCategories(c *gin.Context)
 	Login(c *gin.Context)
 	Register(c *gin.Context)
+	VerifyRegister(c *gin.Context)
 }
 
 type handler struct {

@@ -10,7 +10,8 @@ type Service interface {
 	SearchProductsByName(productName string) ([]models.Product, error)
 	GetCategories() ([]models.Category, error)
 	Login(loginOrEmail, password string) (string, error)
-	Register(login, email, password string) (string, error)
+	Register(login, email, password string) error
+	VerificationRegister(token string) (string, error)
 }
 
 type service struct {

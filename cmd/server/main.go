@@ -8,6 +8,7 @@ import (
 	"johny-tuna/internal/handler"
 	"johny-tuna/internal/repository"
 	"johny-tuna/internal/service"
+	"johny-tuna/internal/utils"
 )
 
 // @title Johny Tuna
@@ -22,6 +23,16 @@ func main() {
 
 	r := gin.Default()
 	r.Use(cors.Default())
+
+	config.BuildExist = utils.BuildCheck()
+
+	if config.BuildExist {
+		r.Static("/assets", "./dist/assets")
+		r.NoRoute(func(c *gin.Context) {
+			c.File("./dist/index.html")
+		})
+	}
+
 	h.Route(r)
 
 	err := r.Run(fmt.Sprintf(":%s", config.Env.Port))

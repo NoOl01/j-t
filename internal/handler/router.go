@@ -26,6 +26,7 @@ func (h *handler) Route(r *gin.Engine) {
 		{
 			auth.POST("/login", h.Login)
 			auth.POST("/register", h.Register)
+			auth.GET("/verify", h.VerifyRegister)
 		}
 		api.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
