@@ -3,6 +3,7 @@ package service
 import (
 	"johny-tuna/internal/utils"
 	"regexp"
+	"strings"
 )
 
 const (
@@ -72,4 +73,15 @@ func (s *service) VerificationRegister(token string) (string, error) {
 	}
 
 	return GenerateToken(user)
+}
+
+func (s *service) VerifyUser(token string) error {
+	token = strings.ReplaceAll(token, "Bearer ", "")
+
+	_, err := DecodeToken(token)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

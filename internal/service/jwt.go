@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/golang-jwt/jwt/v5"
 	"johny-tuna/internal/config"
+	"johny-tuna/internal/errs"
 	"johny-tuna/internal/models"
 	"time"
 )
@@ -39,7 +40,12 @@ func DecodeToken(tokenString string) (jwt.MapClaims, error) {
 	if err != nil {
 		return nil, err
 	}
-	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+
+	if !token.Valid {
+		return nil, errs.InvalidAuthToken
+	}
+
+	if claims, ok := token.Claims.(jwt.MapClaims); ok {
 		return claims, nil
 	}
 	return nil, err

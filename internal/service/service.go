@@ -12,6 +12,7 @@ type Service interface {
 	Login(loginOrEmail, password string) (string, error)
 	Register(login, email, password string) error
 	VerificationRegister(token string) (string, error)
+	VerifyUser(token string) error
 }
 
 type service struct {

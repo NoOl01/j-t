@@ -1,10 +1,12 @@
 package handler
 
 import (
+	"errors"
 	"github.com/gin-gonic/gin"
 	"johny-tuna/internal/errs"
 	"johny-tuna/internal/handler/dto"
 	"net/http"
+	"strings"
 )
 
 // Login
@@ -112,6 +114,50 @@ func (h *handler) VerifyRegister(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{
 		"result": jwtToken,
+		"error":  nil,
+	})
+}
+
+// VerifyUser
+// @Summary Верефикация юзера по токену
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Bearer {token}"
+// @Router /auth/verify/user [get]
+func (h *handler) VerifyUser(c *gin.Context) {
+	token := c.GetHeader("Authorization")
+	if token == "" {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"result": nil,
+			"error":  errs.MissingAuthToken.Error(),
+		})
+		return
+	}
+	if !strings.HasPrefix(token, "Bearer ") {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"result": nil,
+			"error":  errs.WrongAuthTokenFormat.Error(),
+		})
+		return
+	}
+
+	if err := h.service.VerifyUser(token); err != nil {
+		var httpStatus int
+		if errors.Is(err, errs.InvalidAuthToken) {
+			httpStatus = http.StatusUnauthorized
+		} else {
+			httpStatus = http.StatusInternalServerError
+		}
+		c.JSON(httpStatus, gin.H{
+			"result": nil,
+			"error":  err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"result": "ok",
 		"error":  nil,
 	})
 }

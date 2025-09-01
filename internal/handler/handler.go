@@ -13,10 +13,35 @@ type Handler interface {
 	Login(c *gin.Context)
 	Register(c *gin.Context)
 	VerifyRegister(c *gin.Context)
+	VerifyUser(c *gin.Context)
+	GetCartInfo(c *gin.Context)
+	GetPoints(c *gin.Context)
+	UpdateCart(c *gin.Context)
+	UpdatePoints(c *gin.Context)
 }
 
 type handler struct {
 	service service.Service
+}
+
+func (h *handler) GetCartInfo(c *gin.Context) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (h *handler) GetPoints(c *gin.Context) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (h *handler) UpdateCart(c *gin.Context) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (h *handler) UpdatePoints(c *gin.Context) {
+	//TODO implement me
+	panic("implement me")
 }
 
 func NewHandler(service service.Service) Handler {

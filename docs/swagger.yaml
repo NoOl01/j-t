@@ -71,6 +71,37 @@ paths:
       summary: Регистрация (верификация почты по OTP коду)
       tags:
       - auth
+  /auth/verify/user:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Bearer {token}
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Верефикация юзера по токену
+      tags:
+      - auth
   /categories/get:
     get:
       produces:
