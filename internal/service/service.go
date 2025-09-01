@@ -1,6 +1,7 @@
 package service
 
 import (
+	"johny-tuna/internal/handler/dto"
 	"johny-tuna/internal/models"
 	"johny-tuna/internal/repository"
 )
@@ -13,6 +14,7 @@ type Service interface {
 	Register(login, email, password string) error
 	VerificationRegister(token string) (string, error)
 	VerifyUser(token string) error
+	Appeal(body dto.AppealBody) error
 }
 
 type service struct {

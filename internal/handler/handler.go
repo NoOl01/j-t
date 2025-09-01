@@ -18,6 +18,7 @@ type Handler interface {
 	GetPoints(c *gin.Context)
 	UpdateCart(c *gin.Context)
 	UpdatePoints(c *gin.Context)
+	Appeal(c *gin.Context)
 }
 
 type handler struct {

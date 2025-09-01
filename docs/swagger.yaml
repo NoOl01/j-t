@@ -1,5 +1,16 @@
 basePath: /api/v1
 definitions:
+  dto.AppealBody:
+    properties:
+      email:
+        type: string
+      message:
+        type: string
+      name:
+        type: string
+      theme:
+        type: integer
+    type: object
   dto.LoginBody:
     properties:
       login_or_email:
@@ -21,6 +32,23 @@ info:
   title: Johny Tuna
   version: "1.0"
 paths:
+  /appeal:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные обращения
+        in: body
+        name: appeal_body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AppealBody'
+      produces:
+      - application/json
+      responses: {}
+      summary: Обращение
+      tags:
+      - appeal
   /auth/login:
     post:
       consumes:
@@ -83,22 +111,7 @@ paths:
         type: string
       produces:
       - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            additionalProperties: true
-            type: object
-        "401":
-          description: Unauthorized
-          schema:
-            additionalProperties: true
-            type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            additionalProperties: true
-            type: object
+      responses: {}
       summary: Верефикация юзера по токену
       tags:
       - auth

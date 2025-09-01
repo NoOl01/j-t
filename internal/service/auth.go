@@ -47,7 +47,7 @@ func (s *service) Register(login, email, password string) error {
 
 	token := utils.StoreToken(info)
 
-	if err := utils.SendMessage(email, token); err != nil {
+	if err := utils.SendLinkMessage(email, token); err != nil {
 		return err
 	}
 
