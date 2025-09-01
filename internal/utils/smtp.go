@@ -23,7 +23,7 @@ func sendMessage(email, token, msg string) error {
 	auth := smtp.PlainAuth("", from, password, smtpHost)
 
 	var message []byte
-	if msg != "" {
+	if msg == "" {
 		var domain string
 		if config.Env.AppDomain == "localhost" {
 			domain = fmt.Sprintf("http://localhost:%s", config.Env.Port)

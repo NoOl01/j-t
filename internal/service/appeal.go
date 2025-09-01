@@ -7,14 +7,13 @@ import (
 )
 
 func (s *service) Appeal(body dto.AppealBody) error {
-	theme := getAppealTheme(body.Theme)
+	reason := getAppealReason(body.Reason)
 
 	message := fmt.Sprintf("Здравствуйте %s.\r\n"+
 		"Вы подали обращение: %s. \r\n"+
-		"Ваше сообщение: %s. \r\n", body.Name, theme, body.Message)
-	if err := utils.SendMessage(body.Email, message); err != nil {
-		return err
-	}
+		"Ваше сообщение:\r\n"+
+		"Тема: %s\r\n"+
+		"Обращение: %s", body.Name, reason, body.Theme, body.Message)
 
 	if err := utils.SendMessage(body.Email, message); err != nil {
 		return err
@@ -30,7 +29,7 @@ const (
 	Booking
 )
 
-func getAppealTheme(theme int) string {
+func getAppealReason(theme int) string {
 	switch theme {
 	case Feedback:
 		return "Отзыв или предложение"

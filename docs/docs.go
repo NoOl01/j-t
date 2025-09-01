@@ -209,8 +209,11 @@ const docTemplate = `{
                 "name": {
                     "type": "string"
                 },
-                "theme": {
+                "reason": {
                     "type": "integer"
+                },
+                "theme": {
+                    "type": "string"
                 }
             }
         },

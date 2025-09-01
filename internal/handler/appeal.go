@@ -24,7 +24,7 @@ func (h *handler) Appeal(c *gin.Context) {
 		return
 	}
 
-	if body.Name == "" || body.Email == "" || body.Message == "" || body.Theme >= 5 {
+	if body.Name == "" || body.Email == "" || body.Message == "" || body.Theme == "" || body.Reason >= 5 {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": errs.InvalidBody.Error(),
 		})

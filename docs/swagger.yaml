@@ -8,8 +8,10 @@ definitions:
         type: string
       name:
         type: string
-      theme:
+      reason:
         type: integer
+      theme:
+        type: string
     type: object
   dto.LoginBody:
     properties:

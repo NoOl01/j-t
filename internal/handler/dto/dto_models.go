@@ -14,6 +14,7 @@ type RegisterBody struct {
 type AppealBody struct {
 	Name    string `json:"name"`
 	Email   string `json:"email"`
-	Theme   int    `json:"theme"`
+	Theme   string `json:"theme"`
+	Reason  int    `json:"reason"`
 	Message string `json:"message"`
 }
