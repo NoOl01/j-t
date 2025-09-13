@@ -18,3 +18,7 @@ type AppealBody struct {
 	Reason  int    `json:"reason"`
 	Message string `json:"message"`
 }
+
+type EditEmailOrLogin struct {
+	NewValue string `json:"new_value"`
+}

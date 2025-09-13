@@ -11,6 +11,9 @@ type Repository interface {
 	GetCategories() ([]models.Category, error)
 	Login(loginOrEmail string, loginType int) (*models.User, error)
 	Register(login, email, password string) (*models.User, error)
+	GetProfileInfo(id int64) (interface{}, error)
+	EditProfileEmail(id int64, newValue string) error
+	EditProfileLogin(id int64, newValue string) error
 }
 
 type repository struct {

@@ -15,6 +15,10 @@ type Service interface {
 	VerificationRegister(token string) (string, error)
 	VerifyUser(token string) error
 	Appeal(body dto.AppealBody) error
+	GetProfileIdFromToken(token string) (int64, error)
+	GetProfileInfo(id int64) (interface{}, error)
+	EditProfileEmail(id int64, newValue string) error
+	EditProfileLogin(id int64, newValue string) error
 }
 
 type service struct {

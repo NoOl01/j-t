@@ -19,6 +19,9 @@ type Handler interface {
 	UpdateCart(c *gin.Context)
 	UpdatePoints(c *gin.Context)
 	Appeal(c *gin.Context)
+	GetProfileInfo(c *gin.Context)
+	EditProfileEmail(c *gin.Context)
+	EditProfileLogin(c *gin.Context)
 }
 
 type handler struct {

@@ -174,6 +174,96 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/profile/info": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "profile"
+                ],
+                "summary": "Получение информации о профиле",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer {token}",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/profile/update/email": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "profile"
+                ],
+                "summary": "Обновление почты",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer {token}",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Новое значение",
+                        "name": "login_body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.EditEmailOrLogin"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/profile/update/login": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "profile"
+                ],
+                "summary": "Обновление логина",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer {token}",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Новое значение",
+                        "name": "login_body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.EditEmailOrLogin"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/search/products": {
             "get": {
                 "produces": [
@@ -213,6 +303,14 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "theme": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.EditEmailOrLogin": {
+            "type": "object",
+            "properties": {
+                "new_value": {
                     "type": "string"
                 }
             }

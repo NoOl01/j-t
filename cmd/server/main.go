@@ -26,14 +26,13 @@ func main() {
 
 	config.BuildExist = utils.BuildCheck()
 
+	h.Route(r)
 	if config.BuildExist {
 		r.Static("/assets", "./dist/assets")
 		r.NoRoute(func(c *gin.Context) {
 			c.File("./dist/index.html")
 		})
 	}
-
-	h.Route(r)
 
 	err := r.Run(fmt.Sprintf(":%s", config.Env.Port))
 	if err != nil {

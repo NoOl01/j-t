@@ -13,6 +13,11 @@ definitions:
       theme:
         type: string
     type: object
+  dto.EditEmailOrLogin:
+    properties:
+      new_value:
+        type: string
+    type: object
   dto.LoginBody:
     properties:
       login_or_email:
@@ -139,6 +144,66 @@ paths:
       summary: Получение продуктов по категории
       tags:
       - products
+  /profile/info:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Bearer {token}
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Получение информации о профиле
+      tags:
+      - profile
+  /profile/update/email:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Bearer {token}
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Новое значение
+        in: body
+        name: login_body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.EditEmailOrLogin'
+      produces:
+      - application/json
+      responses: {}
+      summary: Обновление почты
+      tags:
+      - profile
+  /profile/update/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Bearer {token}
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Новое значение
+        in: body
+        name: login_body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.EditEmailOrLogin'
+      produces:
+      - application/json
+      responses: {}
+      summary: Обновление логина
+      tags:
+      - profile
   /search/products:
     get:
       parameters:
