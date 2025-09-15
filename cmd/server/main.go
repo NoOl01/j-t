@@ -22,7 +22,11 @@ func main() {
 	h := handler.NewHandler(srv)
 
 	r := gin.Default()
-	r.Use(cors.Default())
+	r.Use(cors.New(cors.Config{
+		AllowAllOrigins: true,
+		AllowMethods:    []string{"GET", "POST"},
+		AllowHeaders:    []string{"Origin", "Content-type", "Accept", "Authorization"},
+	}))
 
 	config.BuildExist = utils.BuildCheck()
 
