@@ -1,6 +1,8 @@
 package service
 
 import (
+	"errors"
+	"gorm.io/gorm"
 	"johny-tuna/internal/utils"
 	"regexp"
 	"strings"
@@ -34,6 +36,11 @@ func (s *service) Login(loginOrEmail, password string) (string, error) {
 }
 
 func (s *service) Register(login, email, password string) error {
+	err := s.repo.CheckUser(email)
+	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+		return err
+	}
+
 	hash, err := EncryptPass(password)
 	if err != nil {
 		return err

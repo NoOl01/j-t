@@ -5,5 +5,6 @@ type User struct {
 	Login     string     `gorm:"size:255;not_null" json:"login"`
 	Email     string     `gorm:"size:255;not_null;uniqueIndex" json:"email"`
 	Password  string     `gorm:"size:255;not_null" json:"-"`
-	CartItems []CartItem `gorm:"constraint:OnDelete:CASCADE,OnUpdate:CASCADE;"`
+	CartItems []CartItem `gorm:"constraint:OnDelete:CASCADE,OnUpdate:CASCADE;" json:"cart_items,omitempty"`
+	Points    Points     `gorm:"foreignKey:UserId"`
 }

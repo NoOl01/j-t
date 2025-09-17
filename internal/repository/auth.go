@@ -31,19 +31,51 @@ func (r *repository) Register(login, email, password string) (*models.User, erro
 	var user models.User
 	if err := r.db.Where("email = ?", email).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
+			tx := r.db.Begin()
+			if tx.Error != nil {
+				return nil, tx.Error
+			}
+
 			user = models.User{
 				Login:    login,
 				Email:    email,
 				Password: password,
 			}
-			if err := r.db.Create(&user).Error; err != nil {
+			if err := tx.Create(&user).Error; err != nil {
+				tx.Rollback()
 				return nil, err
 			}
+
+			var points = models.Points{
+				Value:  10,
+				UserId: user.Id,
+			}
+
+			if err := tx.Create(&points).Error; err != nil {
+				tx.Rollback()
+				return nil, err
+			}
+
+			if err := tx.Commit().Error; err != nil {
+				return nil, err
+			}
+
 			return &user, nil
 		}
 		return nil, err
 	}
 	return nil, errs.UserAlreadyExist
+}
+
+func (r *repository) CheckUser(email string) error {
+	var user models.User
+	if err := r.db.Where("email = ?", email).First(&user).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil
+		}
+		return err
+	}
+	return errs.UserAlreadyExist
 }
 
 func findFirstReq(where, loginOrEmail string, user *models.User, db *gorm.DB) error {

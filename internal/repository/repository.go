@@ -14,6 +14,7 @@ type Repository interface {
 	GetProfileInfo(id int64) (interface{}, error)
 	EditProfileEmail(id int64, newValue string) error
 	EditProfileLogin(id int64, newValue string) error
+	CheckUser(email string) error
 }
 
 type repository struct {
