@@ -25,6 +25,13 @@ definitions:
       password:
         type: string
     type: object
+  dto.NewPassword:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
   dto.RegisterBody:
     properties:
       email:
@@ -33,6 +40,18 @@ definitions:
         type: string
       password:
         type: string
+    type: object
+  dto.ResetPasswordRequest:
+    properties:
+      email:
+        type: string
+    type: object
+  dto.VerifyOtp:
+    properties:
+      email:
+        type: string
+      otp_code:
+        type: integer
     type: object
 info:
   contact: {}
@@ -71,6 +90,57 @@ paths:
       - application/json
       responses: {}
       summary: Вход в аккаунт
+      tags:
+      - auth
+  /auth/password/reset:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Новый пароль
+        in: body
+        name: new_password
+        required: true
+        schema:
+          $ref: '#/definitions/dto.NewPassword'
+      produces:
+      - application/json
+      responses: {}
+      summary: Смена пароля
+      tags:
+      - auth
+  /auth/password/reset/req:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные для запроса на смену пароля
+        in: body
+        name: reset_password_request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ResetPasswordRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Запрос на смену пароля (получение OTP кода)
+      tags:
+      - auth
+  /auth/password/reset/verify:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: OTP код
+        in: body
+        name: otp_code
+        required: true
+        schema:
+          $ref: '#/definitions/dto.VerifyOtp'
+      produces:
+      - application/json
+      responses: {}
+      summary: Подтверждение OTP кода
       tags:
       - auth
   /auth/register:

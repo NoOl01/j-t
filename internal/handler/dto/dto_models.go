@@ -22,3 +22,17 @@ type AppealBody struct {
 type EditEmailOrLogin struct {
 	NewValue string `json:"new_value"`
 }
+
+type ResetPasswordRequest struct {
+	Email string `json:"email"`
+}
+
+type VerifyOtp struct {
+	Email   string `json:"email"`
+	OtpCode int64  `json:"otp_code"`
+}
+
+type NewPassword struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}

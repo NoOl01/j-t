@@ -2,7 +2,9 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"gorm.io/gorm"
+	"johny-tuna/internal/errs"
 	"johny-tuna/internal/utils"
 	"regexp"
 	"strings"
@@ -87,6 +89,42 @@ func (s *service) VerifyUser(token string) error {
 
 	_, err := DecodeToken(token)
 	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *service) ResetPasswordRequest(email string) error {
+	err := s.repo.CheckUser(email)
+	if err != nil && !errors.Is(err, errs.UserAlreadyExist) {
+		return err
+	}
+
+	token := utils.StoreOtpToken(email)
+
+	if err := utils.SendMessage(email, fmt.Sprintf("Ваш код: %d", token), utils.OtpCode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *service) VerifyOtp(email string, token int64) error {
+	if err := utils.VerifyOtpToken(token, email); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *service) ResetPassword(email, password string) error {
+	hash, err := EncryptPass(password)
+	if err != nil {
+		return err
+	}
+
+	if err := s.repo.ResetPassword(email, hash); err != nil {
 		return err
 	}
 

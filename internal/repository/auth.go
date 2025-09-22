@@ -87,3 +87,17 @@ func findFirstReq(where, loginOrEmail string, user *models.User, db *gorm.DB) er
 	}
 	return nil
 }
+
+func (r *repository) ResetPassword(email, password string) error {
+	result := r.db.Model(&models.User{}).Where("email = ?", email).Update("password", password)
+
+	if result.Error != nil {
+		return result.Error
+	}
+
+	if result.RowsAffected == 0 {
+		return gorm.ErrRecordNotFound
+	}
+
+	return nil
+}

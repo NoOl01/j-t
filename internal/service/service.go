@@ -12,6 +12,9 @@ type Service interface {
 	GetCategories() ([]models.Category, error)
 	Login(loginOrEmail, password string) (string, error)
 	Register(login, email, password string) error
+	ResetPasswordRequest(email string) error
+	VerifyOtp(email string, token int64) error
+	ResetPassword(email, password string) error
 	VerificationRegister(token string) (string, error)
 	VerifyUser(token string) error
 	Appeal(body dto.AppealBody) error

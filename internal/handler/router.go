@@ -28,6 +28,9 @@ func (h *handler) Route(r *gin.Engine) {
 			auth.POST("/register", h.Register)
 			auth.GET("/verify", h.VerifyRegister)
 			auth.GET("/verify/user", h.VerifyUser)
+			auth.POST("/password/reset/req", h.ResetPasswordRequest)
+			auth.POST("/password/reset/verify", h.VerifyOtp)
+			auth.POST("/password/reset", h.ResetPassword)
 		}
 		profile := api.Group("/profile")
 		{

@@ -15,7 +15,7 @@ func (s *service) Appeal(body dto.AppealBody) error {
 		"Тема: %s\r\n"+
 		"Обращение: %s", body.Name, reason, body.Theme, body.Message)
 
-	if err := utils.SendMessage(body.Email, message); err != nil {
+	if err := utils.SendMessage(body.Email, message, utils.Appeal); err != nil {
 		return err
 	}
 

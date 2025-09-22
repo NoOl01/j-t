@@ -67,6 +67,84 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/auth/password/reset": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Смена пароля",
+                "parameters": [
+                    {
+                        "description": "Новый пароль",
+                        "name": "new_password",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.NewPassword"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/auth/password/reset/req": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Запрос на смену пароля (получение OTP кода)",
+                "parameters": [
+                    {
+                        "description": "Данные для запроса на смену пароля",
+                        "name": "reset_password_request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.ResetPasswordRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/auth/password/reset/verify": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Подтверждение OTP кода",
+                "parameters": [
+                    {
+                        "description": "OTP код",
+                        "name": "otp_code",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.VerifyOtp"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/auth/register": {
             "post": {
                 "consumes": [
@@ -326,6 +404,17 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.NewPassword": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
         "dto.RegisterBody": {
             "type": "object",
             "properties": {
@@ -337,6 +426,25 @@ const docTemplate = `{
                 },
                 "password": {
                     "type": "string"
+                }
+            }
+        },
+        "dto.ResetPasswordRequest": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.VerifyOtp": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "otp_code": {
+                    "type": "integer"
                 }
             }
         }

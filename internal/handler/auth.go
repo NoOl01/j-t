@@ -161,3 +161,90 @@ func (h *handler) VerifyUser(c *gin.Context) {
 		"error":  nil,
 	})
 }
+
+// ResetPasswordRequest
+// @Summary Запрос на смену пароля (получение OTP кода)
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param reset_password_request body dto.ResetPasswordRequest true "Данные для запроса на смену пароля"
+// @Router /auth/password/reset/req [post]
+func (h *handler) ResetPasswordRequest(c *gin.Context) {
+	var body dto.ResetPasswordRequest
+
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	if err := h.service.ResetPasswordRequest(body.Email); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"error": nil,
+	})
+}
+
+// VerifyOtp
+// @Summary Подтверждение OTP кода
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param otp_code body dto.VerifyOtp true "OTP код"
+// @Router /auth/password/reset/verify [post]
+func (h *handler) VerifyOtp(c *gin.Context) {
+	var body dto.VerifyOtp
+
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	if err := h.service.VerifyOtp(body.Email, body.OtpCode); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"error": nil,
+	})
+}
+
+// ResetPassword
+// @Summary Смена пароля
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param new_password body dto.NewPassword true "Новый пароль"
+// @Router /auth/password/reset [post]
+func (h *handler) ResetPassword(c *gin.Context) {
+	var body dto.NewPassword
+
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	if err := h.service.ResetPassword(body.Email, body.Password); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"error": nil,
+	})
+}
