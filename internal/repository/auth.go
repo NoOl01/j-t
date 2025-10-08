@@ -70,12 +70,9 @@ func (r *repository) Register(login, email, password string) (*models.User, erro
 func (r *repository) CheckUser(email string) error {
 	var user models.User
 	if err := r.db.Where("email = ?", email).First(&user).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil
-		}
 		return err
 	}
-	return errs.UserAlreadyExist
+	return nil
 }
 
 func findFirstReq(where, loginOrEmail string, user *models.User, db *gorm.DB) error {

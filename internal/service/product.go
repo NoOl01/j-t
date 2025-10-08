@@ -9,3 +9,7 @@ func (s *service) GetProductsByCategory(categoryId int64) ([]models.Product, err
 func (s *service) SearchProductsByName(productName string) ([]models.Product, error) {
 	return s.repo.SearchProductsByName(productName)
 }
+
+func (s *service) GetAllProducts() ([]models.Product, error) {
+	return s.repo.GetAllProducts()
+}

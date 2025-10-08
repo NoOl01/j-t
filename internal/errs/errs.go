@@ -11,4 +11,5 @@ var (
 	MissingAuthToken     = errors.New("authorization token is missing")
 	InvalidAuthToken     = errors.New("invalid authorization token")
 	WrongAuthTokenFormat = errors.New("wrong authorization token format")
+	ProductZeroCount     = errors.New("item count must be greater than zero")
 )

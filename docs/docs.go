@@ -219,6 +219,61 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/cart/info": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "cart"
+                ],
+                "summary": "Получение информации о корзине",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer {token}",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/cart/update": {
+            "post": {
+                "description": "Использовать этот запрос в случае обнавления товара в корзине, для добавления нового товара или удаления товара из корзины (count = 0)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "cart"
+                ],
+                "summary": "Получение информации о корзине",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer {token}",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "обновление корзины",
+                        "name": "update_cart",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateCart"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/categories/get": {
             "get": {
                 "produces": [
@@ -228,6 +283,42 @@ const docTemplate = `{
                     "categories"
                 ],
                 "summary": "Получение категорий",
+                "responses": {}
+            }
+        },
+        "/order/place": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "order"
+                ],
+                "summary": "Получение информации о корзине",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer {token}",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/products/all": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "products"
+                ],
+                "summary": "Получение всех продуктов",
                 "responses": {}
             }
         },
@@ -434,6 +525,17 @@ const docTemplate = `{
             "properties": {
                 "email": {
                     "type": "string"
+                }
+            }
+        },
+        "dto.UpdateCart": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "product_id": {
+                    "type": "integer"
                 }
             }
         },

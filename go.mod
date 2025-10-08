@@ -9,9 +9,11 @@ require (
 	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
 	github.com/bytedance/sonic v1.14.0 // indirect
 	github.com/bytedance/sonic/loader v0.3.0 // indirect
+	github.com/cloudinary/cloudinary-go/v2 v2.13.0 // indirect
 	github.com/cloudwego/base64x v0.1.6 // indirect
 	github.com/cloudwego/iasm v0.2.0 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.7 // indirect
+	github.com/creasty/defaults v1.7.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.9 // indirect
 	github.com/gin-contrib/cors v1.7.6 // indirect
 	github.com/gin-contrib/sse v1.1.0 // indirect
@@ -27,6 +29,7 @@ require (
 	github.com/goccy/go-json v0.10.5 // indirect
 	github.com/golang-jwt/jwt/v5 v5.3.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
+	github.com/gorilla/schema v1.4.1 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect

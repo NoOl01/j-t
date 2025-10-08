@@ -2,6 +2,7 @@ package repository
 
 import (
 	"gorm.io/gorm"
+	"johny-tuna/internal/handler/dto"
 	"johny-tuna/internal/models"
 )
 
@@ -16,6 +17,10 @@ type Repository interface {
 	EditProfileEmail(id int64, newValue string) error
 	EditProfileLogin(id int64, newValue string) error
 	CheckUser(email string) error
+	GetAllProducts() ([]models.Product, error)
+	GetCartInfo(id int64) ([]models.CartItem, error)
+	UpdateCart(id int64, cart dto.UpdateCart) error
+	PlaceAnOrder(id int64) error
 }
 
 type repository struct {

@@ -22,6 +22,10 @@ type Service interface {
 	GetProfileInfo(id int64) (interface{}, error)
 	EditProfileEmail(id int64, newValue string) error
 	EditProfileLogin(id int64, newValue string) error
+	GetAllProducts() ([]models.Product, error)
+	GetCartInfo(token string) ([]models.CartItem, error)
+	UpdateCart(token string, cart dto.UpdateCart) error
+	PlaceAnOrder(token string) error
 }
 
 type service struct {

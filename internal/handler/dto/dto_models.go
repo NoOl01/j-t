@@ -36,3 +36,8 @@ type NewPassword struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
+
+type UpdateCart struct {
+	ProductId int64 `json:"product_id"`
+	Count     int   `json:"count"`
+}

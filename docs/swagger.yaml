@@ -46,6 +46,13 @@ definitions:
       email:
         type: string
     type: object
+  dto.UpdateCart:
+    properties:
+      count:
+        type: integer
+      product_id:
+        type: integer
+    type: object
   dto.VerifyOtp:
     properties:
       email:
@@ -192,6 +199,44 @@ paths:
       summary: Верефикация юзера по токену
       tags:
       - auth
+  /cart/info:
+    get:
+      parameters:
+      - description: Bearer {token}
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Получение информации о корзине
+      tags:
+      - cart
+  /cart/update:
+    post:
+      consumes:
+      - application/json
+      description: Использовать этот запрос в случае обнавления товара в корзине,
+        для добавления нового товара или удаления товара из корзины (count = 0)
+      parameters:
+      - description: Bearer {token}
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: обновление корзины
+        in: body
+        name: update_cart
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateCart'
+      produces:
+      - application/json
+      responses: {}
+      summary: Получение информации о корзине
+      tags:
+      - cart
   /categories/get:
     get:
       produces:
@@ -200,6 +245,30 @@ paths:
       summary: Получение категорий
       tags:
       - categories
+  /order/place:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Bearer {token}
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Получение информации о корзине
+      tags:
+      - order
+  /products/all:
+    get:
+      produces:
+      - application/json
+      responses: {}
+      summary: Получение всех продуктов
+      tags:
+      - products
   /products/getByCategory:
     get:
       parameters:

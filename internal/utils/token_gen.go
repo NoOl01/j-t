@@ -64,15 +64,17 @@ func VerifyToken(token string, info *UserInfo) error {
 
 func VerifyOtpToken(token int64, email string) error {
 	if val, exists := otpToken[email]; exists {
-		token = val
-		if timer, ok := tokenTimers[email]; ok {
-			timer.Stop()
-			deleteToken(email)
+		if val != token {
+			return errs.WrongToken
 		}
-
+		if timer, ok := otpTokenTimer[email]; ok {
+			timer.Stop()
+			deleteOtpToken(email)
+		}
 		return nil
 	}
 	return errs.WrongToken
+
 }
 
 func deleteToken(token string) {

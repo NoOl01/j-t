@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"gorm.io/gorm"
-	"johny-tuna/internal/errs"
 	"johny-tuna/internal/utils"
 	"regexp"
 	"strings"
@@ -97,7 +96,7 @@ func (s *service) VerifyUser(token string) error {
 
 func (s *service) ResetPasswordRequest(email string) error {
 	err := s.repo.CheckUser(email)
-	if err != nil && !errors.Is(err, errs.UserAlreadyExist) {
+	if err != nil {
 		return err
 	}
 

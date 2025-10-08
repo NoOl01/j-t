@@ -17,6 +17,7 @@ import (
 func main() {
 	config.LoadEnv()
 	db := repository.Connect()
+
 	repo := repository.NewRepository(db)
 	srv := service.NewService(repo)
 	h := handler.NewHandler(srv)

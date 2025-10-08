@@ -76,3 +76,24 @@ func (h *handler) SearchProductsByName(c *gin.Context) {
 		"result": products,
 	})
 }
+
+// GetAllProducts
+// @Summary Получение всех продуктов
+// @Tags products
+// @Produce json
+// @Router /products/all [get]
+func (h *handler) GetAllProducts(c *gin.Context) {
+	products, err := h.service.GetAllProducts()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"result": nil,
+			"error":  err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"result": products,
+		"error":  nil,
+	})
+}

@@ -13,6 +13,7 @@ func (h *handler) Route(r *gin.Engine) {
 		products := api.Group("/products")
 		{
 			products.GET("/getByCategory", h.GetProductsByCategory)
+			products.GET("/all", h.GetAllProducts)
 		}
 		categories := api.Group("/categories")
 		{
@@ -37,6 +38,15 @@ func (h *handler) Route(r *gin.Engine) {
 			profile.GET("/info", h.GetProfileInfo)
 			profile.POST("/update/email", h.EditProfileEmail)
 			profile.POST("/update/login", h.EditProfileLogin)
+		}
+		cart := api.Group("/cart")
+		{
+			cart.GET("/info", h.GetCartInfo)
+			cart.POST("/update", h.UpdateCart)
+		}
+		order := api.Group("/order")
+		{
+			order.POST("/place", h.PlaceAnOrder)
 		}
 
 		api.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
